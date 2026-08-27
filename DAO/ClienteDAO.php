@@ -63,6 +63,15 @@ class ClienteDAO extends DAO
         return $stmt->execute();
     }
 
+    public function delete(int $id)
+    {
+        $sql = "DELETE FROM cliente WHERE id_cliente =?";
+        $stmt = parent::$connection->prepare($sql);
+        $stmt->bindValue(1, $id);
+        
+        return $stmt->execute();
+    }
+
 
 
 }

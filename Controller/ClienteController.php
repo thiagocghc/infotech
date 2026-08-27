@@ -4,19 +4,20 @@ namespace InfoTech\Controller; //local onde se encontra a classe ClienteControll
 
 use InfoTech\Model\Cliente; // irei utilizar a model de cliente
 
-class ClienteController
+class ClienteController extends Controller
 {
 
     public static function index() //TODOS OS CLIENTES
     {
-        $dadosClientes = Cliente::getAllRows(); //pega os dados da model
-        include VIEW . '/Cliente/listar_clientes.php';
+        $model = new Cliente();
+        $model->getAllRows(); //pega os dados da model
+        parent::render('/Cliente/listar_clientes.php', $model);
     }
 
     public static function cadastro() //ENVIAR OS DADOS RECEBIDOS VIA POST
     {     
         $model = new Cliente();
-        if($_SERVER['REQUEST_METHOD'] === "POST")
+        if(parent::isPost())
         {
             $model->id_cliente = !empty($_POST['id_cliente']) ? $_POST['id_cliente'] : null;
             $model->nome = $_POST['nome'];
@@ -27,7 +28,7 @@ class ClienteController
             // exit;
             $model = $model->save();
             if($model){
-                header("Location: /infotech/cliente/listar");
+                parent::redirect('/infotech/cliente/listar');
             }
         }
         else{
@@ -38,8 +39,21 @@ class ClienteController
                 //  print_r($model);
                 //  exit;
             }
-            include VIEW . '/Cliente/cadastrar_cliente.php';
+            
+            parent::render('/Cliente/cadastrar_cliente.php', $model);
         }
 
+    }
+
+    public static function exclusao()
+    {
+        if(isset($_GET['id_cliente'])){
+
+            $id = $_GET['id_cliente']; //captura o id que veio via GET
+            $model = new Cliente();
+            $model->delete($id);
+            parent::redirect('/infotech/cliente/listar');
+       }
+        // echo "FUNCAO DE EXCLUIR CLIENTE";
     }
 }

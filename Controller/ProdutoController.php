@@ -2,7 +2,7 @@
 
 namespace InfoTech\Controller;
 
-class ProdutoController
+class ProdutoController extends Controller
 {
     public string $nome;
     public float $preco;

@@ -4,7 +4,7 @@ namespace InfoTech\Model; // localizando onde está a classe ClienteModel
 
 use InfoTech\DAO\ClienteDAO; // vou chamar um método da class DAO, use ClienteDAO
 
-class Cliente
+final class Cliente extends Model
 {
     public ?int $id_cliente;
     public string $nome;
@@ -13,11 +13,11 @@ class Cliente
     public string $email;
     public ?string $data_cadastro;
 
-    public static function getAllRows()
+    public function getAllRows()
     {   
         $objCli = new ClienteDAO();
-        return $objCli->select();
-        // return new ClienteDAO()->select();
+        $this->rows = $objCli->select();
+        return $this->rows;
     }
 
     public static function getById($id)
@@ -31,5 +31,11 @@ class Cliente
     {   
         $objCli = new ClienteDAO();
         return $objCli->save($this);
+    }
+
+    public function delete(int $id)
+    {   
+        $objCli = new ClienteDAO();
+        return $objCli->delete($id);
     }
 }
