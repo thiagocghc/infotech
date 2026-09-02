@@ -2,7 +2,7 @@
 
 namespace InfoTech\Controller;
 
-class InicioController
+class InicioController extends Controller
 {
     public static function index()
     {
@@ -11,6 +11,6 @@ class InicioController
 
     public static function notFound()
     {
-        include VIEW . '/notfound/notfound.php';
+        parent::redirect('/notfound/notfound.php');
     }
 }

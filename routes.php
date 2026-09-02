@@ -2,9 +2,8 @@
 
 use InfoTech\Controller\{ 
                         VendedorController, 
-                        ClienteController, 
-                        ProdutoController,
-                    InicioController  };
+                        ClienteController, ProdutoController,
+                    InicioController, LoginController  };
 
 
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -30,5 +29,9 @@ switch($url)
 
     case "/infotech/admin":
         InicioController::notFound();
+    break;
+
+    case "/infotech/login":
+        LoginController::index();
     break;
 }

@@ -9,6 +9,7 @@ class ClienteController extends Controller
 
     public static function index() //TODOS OS CLIENTES
     {
+        parent::isLogged(); ##chama o método que valida se o usuário está logado
         $model = new Cliente();
         $model->getAllRows(); //pega os dados da model
         parent::render('/Cliente/listar_clientes.php', $model);
@@ -16,6 +17,7 @@ class ClienteController extends Controller
 
     public static function cadastro() //ENVIAR OS DADOS RECEBIDOS VIA POST
     {     
+        parent::isLogged();
         $model = new Cliente();
         if(parent::isPost())
         {
@@ -47,6 +49,7 @@ class ClienteController extends Controller
 
     public static function exclusao()
     {
+        parent::isLogged();
         if(isset($_GET['id_cliente'])){
 
             $id = $_GET['id_cliente']; //captura o id que veio via GET
