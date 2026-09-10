@@ -1,0 +1,15 @@
+#form_modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .oculta{
+    visibility: hidden;
+  }
+  
+  .chama {
+    visibility: visible;
+    background-color: red;
+  }

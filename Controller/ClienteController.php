@@ -1,7 +1,6 @@
 <?php
 
 namespace InfoTech\Controller; //local onde se encontra a classe ClienteController
-
 use InfoTech\Model\Cliente; // irei utilizar a model de cliente
 
 class ClienteController extends Controller
