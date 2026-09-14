@@ -27,7 +27,7 @@ class CategoriaController extends Controller
             $result = ['status' => 500, 'mensagem' => 'Não foi possível carregar as categorias.'];
         }
 
-        parent::json($result);
+        parent::jsonResponse($result);
     }
 
     // POST /infotech/categoria/cadastro

@@ -25,7 +25,24 @@ formCliente.addEventListener('submit', async (event) => {
     }
 });
 
-// Ao clicar OK no modal de sucesso, volta para a listagem
-modalCliente.addEventListener('close', () => {
-    window.location.href = '/infotech/cliente/listar';
+document.addEventListener("DOMContentLoaded", async function () {
+    //pegar os dados do banco
+    try {
+        const response = await fetch('/infotech/categoria/listar')
+        const result = await response.json();
+
+        if (result.status === 200) {
+            console.log(result);
+        } else {
+            alert(result.mensagem);
+        }
+    } catch (error) {
+        alert('Não foi possível falar com o servidor. Tente novamente.');
+        console.error(error);
+    }
 });
+
+// // Ao clicar OK no modal de sucesso, volta para a listagem
+// modalCliente.addEventListener('close', () => {
+//     window.location.href = '/infotech/cliente/listar';
+// });
