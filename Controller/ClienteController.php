@@ -25,8 +25,11 @@ class ClienteController extends Controller
             $model->status_cliente = $_POST['status_cliente'];
             $model->telefone = $_POST['telefone'];
             $model->email = $_POST['email'];
+            $model->id_categoria = $_POST['id_categoria'];
             // print_r($model);
             // exit;
+
+
             $model = $model->save();
             if($model){
                 parent::redirect('/infotech/cliente/listar');

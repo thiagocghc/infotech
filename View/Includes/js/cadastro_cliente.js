@@ -1,29 +1,28 @@
-// Os nomes das constantes são diferentes dos do categoria.js de propósito:
-// scripts comuns compartilham o escopo global, e dois "const modal" dariam erro.
-const formCliente  = document.getElementById('form_cliente');
-// const modalCliente = document.getElementById('modal_cliente');
 
-formCliente.addEventListener('submit', async (event) => {
-    event.preventDefault(); // impede o envio normal (que recarregaria a página)
+// const formCliente  = document.getElementById('form_cliente');
+// // const modalCliente = document.getElementById('modal_cliente');
 
-    try {
-        const response = await fetch('/infotech/cliente/cadastro', {
-            method: 'POST',
-            body: new FormData(formCliente) // já inclui o id_categoria do select
-        });
-        const result = await response.json();
+// formCliente.addEventListener('submit', async (event) => {
+//     event.preventDefault(); // segura os dados
 
-        if (result.status === 200) {
-            alert("Cadastrado com sucesso!!");
-            // modalCliente.showModal();
-        } else {
-            alert(result.mensagem);
-        }
-    } catch (error) {
-        alert('Não foi possível falar com o servidor. Tente novamente.');
-        console.error(error);
-    }
-});
+//     try {
+//         const response = await fetch('/infotech/cliente/cadastro', {
+//             method: 'POST',
+//             body: new FormData(formCliente)
+//         });
+//         const result = await response.json();
+
+//         if (result.status === 200) {
+//             alert("Cadastrado com sucesso!!");
+//             // modalCliente.showModal();
+//         } else {
+//             alert(result.mensagem);
+//         }
+//     } catch (error) {
+//         alert('Não foi possível falar com o servidor. Tente novamente.');
+//         console.error(error);
+//     }
+// });
 
 document.addEventListener("DOMContentLoaded", async function () {
     //pegar os dados do banco
