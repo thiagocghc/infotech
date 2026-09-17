@@ -1,63 +1,70 @@
 <?php
 
-namespace InfoTech\Controller;
+namespace InfoTech\Controller; //local onde se encontra a classe Categoria
+use InfoTech\Model\Categoria; // irei utilizar a model de categoria
 
-use InfoTech\Model\Categoria;
+//Esta CLASSE só responde em JSON 
 
 class CategoriaController extends Controller
 {
-    // GET /infotech/categoria/listar
-    // Chamado pelo JS: devolve todas as categorias (getAllRows) em JSON
-    public static function listar()
-    {
-        parent::isLoggedJson();
 
-        try {
+        public static function listar()
+        {
+            try
+            {
+                $model = new Categoria();
+                $categorias =  $model->getAllRows();
+
+                //SELECT * FROM CATEGORIA  8 CAMPOS
+                // monta só os campos que o select precisa
+                $categorias = array_map(fn($categoria) => [
+                    'id_categoria' => $categoria->id_categoria,
+                    'nome'         => $categoria->nome,
+                ], $model->rows);
+
+                $result = ['status' => 200, 'data' => $categorias];
+
+            }
+            catch(\Throwable  $e)
+            {
+                $result = ['status' => 400, 'msg' => 'erro ao tentar consultar a categoria'];
+            }
+
+            parent::jsonResponse($result);
+
+        }
+
+        public static function cadastro()
+        {
             $model = new Categoria();
-            $model->getAllRows();
+            $model->id_categoria = null;
+            $model->nome = $_POST['nome'];
+            $model->descricao = $_POST['descricao'];
 
-            // monta só os campos que o select precisa
-            $categorias = array_map(fn($categoria) => [
-                'id_categoria' => $categoria->id_categoria,
-                'nome'         => $categoria->nome,
-            ], $model->rows);
+            if($model->nome === '')
+            {
+                $array = [ 'status' => 400, 'msg' => 'Informe o nome da categoria' ];
+                parent::jsonResponse($array);
+            }
 
-            $result = ['status' => 200, 'categorias' => $categorias];
-        } catch (\Throwable $e) {
-            $result = ['status' => 500, 'mensagem' => 'Não foi possível carregar as categorias.'];
+            try
+            {
+                $model->save();
+                $result = [
+                    'status' => 200,
+                    'msg' => 'Cadastrado com sucesso',
+                    'id_categoria' => $model->id_categoria
+                ];
+            }
+            catch(\PDOException $e)
+            {
+                $result =  [
+                    'status' => 500,
+                    'msg' => 'Erro ao cadastrar ao '
+                ];
+            }
+
+            parent::jsonResponse($result);
         }
 
-        parent::jsonResponse($result);
-    }
-
-    // POST /infotech/categoria/cadastro
-    // Chamado pelo JS (modal): cadastra e devolve o ID da nova categoria
-    public static function cadastro()
-    {
-        parent::isLoggedJson();
-
-        $model = new Categoria();
-        $model->nome      = trim($_POST['nome'] ?? '');
-        $model->descricao = trim($_POST['descricao'] ?? '') ?: null;
-
-        if ($model->nome === '') {
-            parent::jsonResponse(['status' => 400, 'mensagem' => 'Informe o nome da categoria.']);
-        }
-
-        try {
-            $model->save();
-            $result = [
-                'status'       => 200,
-                'mensagem'     => 'Categoria cadastrada.',
-                'id_categoria' => $model->id_categoria,
-            ];
-        } catch (\PDOException $e) {
-            // 23000 = violação de restrição (aqui, o UNIQUE do nome)
-            $result = ($e->getCode() == '23000')
-                ? ['status' => 409, 'mensagem' => "A categoria \"{$model->nome}\" já existe."]
-                : ['status' => 500, 'mensagem' => 'Erro ao salvar a categoria.'];
-        }
-
-        parent::jsonResponse($result);
-    }
 }

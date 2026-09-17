@@ -17,8 +17,8 @@
         <p id="categoria_erro" class="text-danger small" hidden></p>
 
         <div class="d-flex justify-content-end gap-2">
-            <button type="button" class="btn btn-outline-secondary" id="btn_cancelar_categoria">Cancelar</button>
-            <button type="submit" class="btn btn-primary" id="btn_salvar_categoria">Salvar categoria</button>
+            <!-- <button type="button" class="btn btn-outline-secondary" id="btn_cancelar_categoria">Cancelar</button> -->
+            <button type="submit" class="btn btn-primary" id="btn_salvar_categoria">Salvar</button>
         </div>
     </form>
 </dialog>

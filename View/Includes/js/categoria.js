@@ -6,24 +6,21 @@ const btnNovaCategoria = document.getElementById('btn_nova_categoria');
 const modalCategoria       = document.getElementById('modal_categoria');
 const formCategoria        = document.getElementById('form_categoria');
 const erroCategoria        = document.getElementById('categoria_erro');
-const btnCancelarCategoria = document.getElementById('btn_cancelar_categoria');
+// const btnCancelarCategoria = document.getElementById('btn_cancelar_categoria');
 const btnSalvarCategoria   = document.getElementById('btn_salvar_categoria');
 
 // Busca as categorias na rota /categoria/listar (que chama o getAllRows)
 // e monta as opções do select. idSelecionado = categoria que deve ficar marcada.
 async function carregarCategorias(idSelecionado = '') {
+
     try {
         const response = await fetch('/infotech/categoria/listar');
         const result = await response.json();
 
-        if (result.status !== 200) {
-            throw new Error(result.mensagem);
-        }
-
         selectCategoria.innerHTML = ''; // limpa as opções antigas
 
         const placeholder = new Option(
-            result.categorias.length > 0
+            result.data.length > 0
                 ? 'Selecione a categoria'
                 : 'Nenhuma categoria cadastrada. Use + Categoria',
             ''
@@ -31,7 +28,7 @@ async function carregarCategorias(idSelecionado = '') {
         placeholder.disabled = true;
         selectCategoria.add(placeholder);
 
-        result.categorias.forEach(categoria => {
+        result.data.forEach(categoria => {
             // new Option(texto, valor) evita montar HTML na mão
             selectCategoria.add(new Option(categoria.nome, categoria.id_categoria));
         });
@@ -60,22 +57,26 @@ btnNovaCategoria.addEventListener('click', () => {
     modalCategoria.showModal();
 });
 
-btnCancelarCategoria.addEventListener('click', () => {
-    modalCategoria.close();
-});
+// btnCancelarCategoria.addEventListener('click', () => {
+//     modalCategoria.close();
+// });
 
 // Cadastra a categoria e atualiza o select
 formCategoria.addEventListener('submit', async (event) => {
     event.preventDefault();
     erroCategoria.hidden = true;
-    btnSalvarCategoria.disabled = true; // evita clique duplo
+    btnSalvarCategoria.disabled = true; 
+
+    const formulario = new FormData(formCategoria);
+    
 
     try {
         // 1) POST na rota de cadastro de categoria
-        const response = await fetch(formCategoria.action, {
+        const response = await fetch('/infotech/categoria/cadastro', {
             method: 'POST',
-            body: new FormData(formCategoria)
+            body: formulario
         });
+
         const result = await response.json();
 
         if (result.status !== 200) {
@@ -96,3 +97,5 @@ formCategoria.addEventListener('submit', async (event) => {
 
 // Ao abrir a página: carrega as categorias (na edição, marca a do cliente)
 carregarCategorias(selectCategoria.dataset.selecionado);
+
+ 

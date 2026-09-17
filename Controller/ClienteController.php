@@ -11,6 +11,7 @@ class ClienteController extends Controller
         parent::isLogged(); ##chama o método que valida se o usuário está logado
         $model = new Cliente();
         $model->getAllRows(); //pega os dados da model
+        
         parent::render('/Cliente/listar_clientes.php', $model);
     }
 
@@ -28,8 +29,6 @@ class ClienteController extends Controller
             $model->id_categoria = $_POST['id_categoria'];
             // print_r($model);
             // exit;
-
-
             $model = $model->save();
             if($model){
                 parent::redirect('/infotech/cliente/listar');

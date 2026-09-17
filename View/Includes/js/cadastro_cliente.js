@@ -1,47 +1,28 @@
+const modal = document.getElementById("modal");
 
-// const formCliente  = document.getElementById('form_cliente');
-// // const modalCliente = document.getElementById('modal_cliente');
+// console.log(modal);
+function chamaModal(){
+    modal.classList.remove('oculta');
+    modal.classList.add('chama');
+}
 
-// formCliente.addEventListener('submit', async (event) => {
-//     event.preventDefault(); // segura os dados
+let nome = document.getElementById("nome");
 
-//     try {
-//         const response = await fetch('/infotech/cliente/cadastro', {
-//             method: 'POST',
-//             body: new FormData(formCliente)
-//         });
-//         const result = await response.json();
-
-//         if (result.status === 200) {
-//             alert("Cadastrado com sucesso!!");
-//             // modalCliente.showModal();
-//         } else {
-//             alert(result.mensagem);
-//         }
-//     } catch (error) {
-//         alert('Não foi possível falar com o servidor. Tente novamente.');
-//         console.error(error);
-//     }
-// });
-
-document.addEventListener("DOMContentLoaded", async function () {
-    //pegar os dados do banco
-    try {
-        const response = await fetch('/infotech/categoria/listar')
+nome.addEventListener('change' , async function(event){
+    event.preventDefault();
+    
+    try{
+        const response = await fetch('/infotech/cliente/cadastro');
         const result = await response.json();
-
-        if (result.status === 200) {
-            console.log(result);
-        } else {
-            alert(result.mensagem);
+        
+        if(result.status == 200){
+            console.log( result );
+            chamaModal();
+        }else{
+            alert("não chama nada!");
         }
-    } catch (error) {
-        alert('Não foi possível falar com o servidor. Tente novamente.');
-        console.error(error);
     }
-});
-
-// // Ao clicar OK no modal de sucesso, volta para a listagem
-// modalCliente.addEventListener('close', () => {
-//     window.location.href = '/infotech/cliente/listar';
-// });
+    catch(error){
+        alert(error);
+    }
+} );

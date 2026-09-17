@@ -13,15 +13,6 @@ abstract class Controller
 
     }
 
-    // Para rotas chamadas via fetch: um redirect devolveria HTML e quebraria o response.json()
-    final protected static function isLoggedJson(): void
-    {
-        if (!isset($_SESSION['usuario_logado'])) {
-            $data = ['status' => 401, 'mensagem' => 'Sua sessão expirou. Faça login novamente.'];
-            self::jsonResponse($data);
-        }
-    }
-
     final protected static function isPost(): bool
     {
         return $_SERVER['REQUEST_METHOD'] === "POST";
@@ -38,9 +29,7 @@ abstract class Controller
         include VIEW . $view;
     }
 
-
-    // Envia uma resposta JSON e encerra o script
-    final protected static function jsonResponse(array $data): void
+    final protected static function jsonResponse(array $data)
     {
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($data);

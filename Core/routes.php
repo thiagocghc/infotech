@@ -6,7 +6,7 @@ $router->add('GET',  '/infotech/login',  'LoginController@index');
 $router->add('POST', '/infotech/login',  'LoginController@index');
 $router->add('GET',  '/infotech/logout', 'LoginController@logout');
 
-$router->add('GET',  '/infotech/cliente/listar', 'ClienteController@index');
+$router->add('GET',  '/infotech/cliente/listar',   'ClienteController@index');
 $router->add('GET',  '/infotech/cliente/cadastro', 'ClienteController@cadastro');
 $router->add('POST', '/infotech/cliente/cadastro', 'ClienteController@cadastro');
 $router->add('GET',  '/infotech/cliente/exclusao', 'ClienteController@exclusao');
