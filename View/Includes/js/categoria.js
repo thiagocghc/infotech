@@ -1,16 +1,15 @@
-// ---------- Elementos do formulário de cliente ----------
+// formulário de cliente
 const selectCategoria  = document.getElementById('id_categoria');
 const btnNovaCategoria = document.getElementById('btn_nova_categoria');
 
-// ---------- Elementos do modal de categoria ----------
+// modal de categoria
 const modalCategoria       = document.getElementById('modal_categoria');
 const formCategoria        = document.getElementById('form_categoria');
 const erroCategoria        = document.getElementById('categoria_erro');
 // const btnCancelarCategoria = document.getElementById('btn_cancelar_categoria');
 const btnSalvarCategoria   = document.getElementById('btn_salvar_categoria');
 
-// Busca as categorias na rota /categoria/listar (que chama o getAllRows)
-// e monta as opções do select. idSelecionado = categoria que deve ficar marcada.
+// buscar categorias na rota /categoria/listar
 async function carregarCategorias(idSelecionado = '') {
 
     try {
@@ -71,7 +70,7 @@ formCategoria.addEventListener('submit', async (event) => {
     
 
     try {
-        // 1) POST na rota de cadastro de categoria
+
         const response = await fetch('/infotech/categoria/cadastro', {
             method: 'POST',
             body: formulario
@@ -84,7 +83,6 @@ formCategoria.addEventListener('submit', async (event) => {
             return;
         }
 
-        // 2) recarrega o select (getAllRows) já marcando a categoria recém-criada
         await carregarCategorias(result.id_categoria);
         modalCategoria.close();
     } catch (error) {
@@ -95,7 +93,7 @@ formCategoria.addEventListener('submit', async (event) => {
     }
 });
 
-// Ao abrir a página: carrega as categorias (na edição, marca a do cliente)
+// Ao abrir a página carrega todas as categorias
 carregarCategorias(selectCategoria.dataset.selecionado);
 
  
