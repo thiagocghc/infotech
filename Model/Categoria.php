@@ -1,8 +1,8 @@
 <?php
 
-namespace InfoTech\Model; // localizando onde está a classe ClienteModel
+namespace InfoTech\Model;
 
-use InfoTech\DAO\CategoriaDAO; // vou chamar um método da class DAO, use ClienteDAO
+use InfoTech\DAO\CategoriaDAO;
 
 final class Categoria extends Model
 {
@@ -33,6 +33,6 @@ final class Categoria extends Model
     public function delete(int $id)
     {   
         $objCat = new CategoriaDAO();
-        return $objCli->delete($id);
+        return $objCat->delete($id);
     }
 }
